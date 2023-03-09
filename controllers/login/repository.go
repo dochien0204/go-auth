@@ -1,16 +1,9 @@
 package login
 
-import "jwt-project/models"
-
-type user struct {
-	Username string `json:"username"`
-	Password string `password:"password"`
-}
-
-var users = []user{
-	{Username: "dochien0204", Password: "chien123"},
-	{Username: "dochien123", Password: "chien123"},
-}
+import (
+	"jwt-project/models"
+	"jwt-project/store"
+)
 
 type Repository interface {
 	LoginRepository(input *models.EntityUser) (*models.EntityUser, string)
@@ -30,7 +23,7 @@ func (r *repository) LoginRepository(input *models.EntityUser) (*models.EntityUs
 	user.Password = input.Password
 
 	isExists := false
-	for _, val := range users {
+	for _, val := range store.Users {
 		if val.Username == user.Username && val.Password == user.Password {
 			isExists = true
 			break
