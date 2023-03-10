@@ -8,8 +8,10 @@ import (
 )
 
 func main() {
+
 	router := gin.Default()
 	routes.InitAuthRoutes(router)
 	router.Run("localhost:8080")
 	log.Fatal()
+
 }

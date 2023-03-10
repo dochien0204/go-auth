@@ -1,8 +1,11 @@
 package logoutHandler
 
 import (
+	"fmt"
+	"jwt-project/configs"
 	"jwt-project/utils"
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -10,17 +13,17 @@ import (
 func LogoutHandler(ctx *gin.Context) {
 	// token := ctx.Param("token")
 
-	resultToken, errToken := utils.VerifyTokenHeader(ctx, "JWT_SECRET")
+	tokenHeader := ctx.GetHeader("Authorization")
+	accessToken := strings.SplitAfter(tokenHeader, "Bearer")[1]
+	accessToken = strings.Trim(accessToken, " ")
 
-	if errToken != nil {
-		utils.APIResponse(ctx, "Verified token failed", http.StatusBadRequest, http.MethodPost, nil)
-		return
-	}
+	fmt.Println("AccessToken:", accessToken)
+	redisClient := configs.RedisDatabase()
 
-	result := utils.DecodeToken(resultToken)
+	redisClient.LRem(configs.Ctx, "accessToken", -1, accessToken)
+	lenList := redisClient.LLen(configs.Ctx, "accessToken")
+	lenRange := redisClient.LRange(configs.Ctx, "accessToken", 0, lenList.Val())
+	fmt.Println(lenRange)
 
-	result.Claims.Active = false
-	result.Claims.Authorization = false
-
-	utils.APIResponse(ctx, "Logout succesfully", http.StatusOK, http.MethodPost, result)
+	utils.APIResponse(ctx, "Logout succesfully", http.StatusOK, http.MethodPost, nil)
 }
