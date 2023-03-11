@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"jwt-project/configs"
 	"jwt-project/controllers/login"
+	"jwt-project/presenters"
 	"jwt-project/utils"
 	"net/http"
 	"time"
@@ -53,5 +54,7 @@ func (h *handler) LoginHandler(ctx *gin.Context) {
 		return
 	}
 
-	utils.APIResponse(ctx, "Login successfully", http.StatusOK, http.MethodPost, accessToken)
+	loginResponse := presenters.LoginResponse{AccessToken: accessToken}
+
+	utils.APIResponse(ctx, "Login successfully", http.StatusOK, http.MethodPost, loginResponse)
 }
