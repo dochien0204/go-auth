@@ -10,8 +10,9 @@ import (
 )
 
 func main() {
+
 	configs.ConnectDB()
-	configs.Database.AutoMigrate(&models.EntityUser{})
+	configs.Database.AutoMigrate(&models.EntityUser{}, &models.OTPToken{})
 	router := gin.Default()
 
 	routes.InitAuthRoutes(router)

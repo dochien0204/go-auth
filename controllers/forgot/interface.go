@@ -1,9 +1,5 @@
 package forgot
 
-import (
-	"jwt-project/models"
-)
-
 type IForgotService interface {
-	ForgotService(input *InputForgot) (*models.EntityUser, bool)
+	ForgotService(input *InputForgot) (string, bool)
 }

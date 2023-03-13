@@ -26,7 +26,7 @@ func (r *repository) ForgotRepository(input *models.EntityUser) (*models.EntityU
 
 	var user models.EntityUser
 
-	countRow := r.database.Table("entity_users").Where("username = ? AND password_reset_token = ?", input.Username, input.PasswordResetToken).Find(&user).RowsAffected
+	countRow := r.database.Table("entity_users").Where("username = ? ", input.Username).Find(&user).RowsAffected
 
 	if countRow == 0 {
 		return nil, false

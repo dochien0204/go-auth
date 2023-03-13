@@ -14,6 +14,7 @@ func (s *service) RegisterService(input *InputRegister) (*models.EntityUser, str
 	user := models.EntityUser{
 		Username: input.Username,
 		Password: input.Password,
+		Email:    input.Email,
 	}
 
 	resultRegister, errRegister := s.repository.RegisterRepository(&user)

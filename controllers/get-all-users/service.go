@@ -22,3 +22,8 @@ func (s *service) GetAllUsers() ([]models.EntityUser, bool) {
 
 	return result, true
 }
+
+func (s *service) GetUserByUserName(username string) (*models.EntityUser, string) {
+	result, err := s.repository.GetUserByUserName(username)
+	return result, err
+}

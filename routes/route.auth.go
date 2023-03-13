@@ -39,4 +39,5 @@ func InitAuthRoutes(route *gin.Engine) {
 	groupRoute.POST("/forgot", forgotHandler.ForgotHandler)
 
 	groupRoute.GET("/find-all", getAllUsersHandler.GetAllUserHandler)
+	groupRoute.GET("/:username/find", getAllUsersHandler.GetUserByUserName)
 }

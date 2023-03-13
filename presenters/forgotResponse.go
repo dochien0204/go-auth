@@ -1,5 +1,5 @@
 package presenters
 
 type ForgotPasswordResponse struct {
-	PasswordResetLink string `json:"passwordResetLink"`
+	Result string `json:"result"`
 }
