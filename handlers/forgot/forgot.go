@@ -2,7 +2,7 @@ package forgotHandler
 
 import (
 	"jwt-project/controllers/forgot"
-	"jwt-project/output"
+	"jwt-project/presenters"
 	"jwt-project/utils"
 	"net/http"
 
@@ -30,6 +30,6 @@ func (h *handler) ForgotHandler(ctx *gin.Context) {
 
 	resetLink := "http://localhost:8080/" + resultForgot.Username + "/reset-password"
 
-	forgotPasswordResponse := &output.ForgotPasswordResponse{PasswordResetLink: resetLink}
+	forgotPasswordResponse := presenters.ForgotPasswordResponse{PasswordResetLink: resetLink}
 	utils.APIResponse(ctx, "Forgot successfully", http.StatusOK, http.MethodPost, forgotPasswordResponse)
 }
