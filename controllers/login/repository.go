@@ -1,8 +1,10 @@
 package login
 
 import (
+	"jwt-project/configs"
 	"jwt-project/models"
-	"jwt-project/store"
+
+	"gorm.io/gorm"
 )
 
 type Repository interface {
@@ -10,30 +12,27 @@ type Repository interface {
 }
 
 type repository struct {
+	database *gorm.DB
 }
 
 func NewLoginRepository() *repository {
-	return &repository{}
+	return &repository{
+		database: configs.Database,
+	}
 }
 
 func (r *repository) LoginRepository(input *models.EntityUser) (*models.EntityUser, string) {
 	var user models.EntityUser
 
-	user.Username = input.Username
-	user.Password = input.Password
+	result := r.database.Table("entity_users").Where("username = ? AND password = ?", input.Username, input.Password).Find(&user)
 
-	isExists := false
-	for _, val := range store.Users {
-		if val.Username == user.Username && val.Password == user.Password {
-			isExists = true
-			break
-		}
+	if err := result.Error; err != nil {
+		return nil, "Error in db"
+	}
+	if result.RowsAffected == 0 {
+		return nil, "Account not exists"
 	}
 
-	if !isExists {
-		return &user, "Invalid account"
-	}
-
-	return &user, "Login successfully"
+	return &user, "Successfully"
 
 }

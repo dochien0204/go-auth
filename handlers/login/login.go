@@ -26,10 +26,9 @@ func (h *handler) LoginHandler(ctx *gin.Context) {
 	ctx.ShouldBindJSON(&input)
 
 	resultLogin, errorLogin := h.service.LoginService(&input)
-	fmt.Println("Error", errorLogin)
 
-	if errorLogin == "Invalid account" {
-		utils.ValidatorErrorResponse(ctx, "Login Failed", http.StatusBadRequest, http.MethodPost, errorLogin)
+	if errorLogin != "Successfully" {
+		utils.ValidatorErrorResponse(ctx, "Login failed", http.StatusBadRequest, http.MethodPost, errorLogin)
 		return
 	}
 
