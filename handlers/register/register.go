@@ -26,7 +26,7 @@ func (h *handler) RegisterHandler(ctx *gin.Context) {
 
 	resultRegister, errRegister := h.service.RegisterService(&input)
 
-	if errRegister == "Account already exists" {
+	if errRegister != "Successfully" {
 		utils.ValidatorErrorResponse(ctx, "Register failed", http.StatusBadRequest, http.MethodPost, errRegister)
 		return
 	}
