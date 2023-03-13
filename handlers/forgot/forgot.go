@@ -23,13 +23,13 @@ func (h *handler) ForgotHandler(ctx *gin.Context) {
 
 	resultForgot, errForgot := h.service.ForgotService(&input)
 
-	if errForgot != "Forgot successfully" {
-		utils.ValidatorErrorResponse(ctx, "Forgot failed", http.StatusBadRequest, http.MethodPost, errForgot)
+	if !errForgot {
+		utils.ValidatorErrorResponse(ctx, "Failed", http.StatusBadRequest, http.MethodPost, "Forgot Password Failed")
 		return
 	}
 
 	resetLink := "http://localhost:8080/" + resultForgot.Username + "/reset-password"
 
 	forgotPasswordResponse := presenters.ForgotPasswordResponse{PasswordResetLink: resetLink}
-	utils.APIResponse(ctx, "Forgot successfully", http.StatusOK, http.MethodPost, forgotPasswordResponse)
+	utils.APIResponse(ctx, "Successfully", http.StatusOK, http.MethodPost, forgotPasswordResponse)
 }

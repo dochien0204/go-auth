@@ -23,7 +23,7 @@ func NewRepository() *repository {
 
 func (r *repository) GetAllUsers() ([]models.EntityUser, bool) {
 	var accounts []models.EntityUser
-	err := r.Database.Find(&accounts).Error
+	err := r.Database.Table("entity_users").Find(&accounts).Error
 
 	if err != nil {
 		return nil, false

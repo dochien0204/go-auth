@@ -12,7 +12,7 @@ func NewForgotService(repository Repository) *service {
 	return &service{repository: repository}
 }
 
-func (s *service) ForgotService(input *InputForgot) (*models.EntityUser, string) {
+func (s *service) ForgotService(input *InputForgot) (*models.EntityUser, bool) {
 	var user models.EntityUser
 	user.Username = input.Username
 	user.PasswordResetToken = input.ForgotToken

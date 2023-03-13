@@ -5,5 +5,5 @@ import (
 )
 
 type IForgotService interface {
-	ForgotService(input *InputForgot) (*models.EntityUser, string)
+	ForgotService(input *InputForgot) (*models.EntityUser, bool)
 }

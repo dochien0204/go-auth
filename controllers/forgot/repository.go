@@ -1,43 +1,39 @@
 package forgot
 
 import (
+	"fmt"
+	"jwt-project/configs"
 	"jwt-project/models"
-	"jwt-project/store"
+
+	"gorm.io/gorm"
 )
 
-type repository struct{}
+type repository struct {
+	database *gorm.DB
+}
 
 type Repository interface {
-	ForgotRepository(input *models.EntityUser) (*models.EntityUser, string)
+	ForgotRepository(input *models.EntityUser) (*models.EntityUser, bool)
 }
 
 func NewForgotRepository() *repository {
-	return &repository{}
+	return &repository{
+		database: configs.Database,
+	}
 }
 
-func (r *repository) ForgotRepository(input *models.EntityUser) (*models.EntityUser, string) {
+func (r *repository) ForgotRepository(input *models.EntityUser) (*models.EntityUser, bool) {
 
 	var user models.EntityUser
 
-	isExists := false
-	for _, val := range store.Users {
-		if val.Username == input.Username {
-			user.Username = val.Username
-			user.Password = val.Password
-			user.PasswordResetToken = val.PasswordResetToken
-			isExists = true
-			break
-		}
+	countRow := r.database.Table("entity_users").Where("username = ? AND password_reset_token = ?", input.Username, input.PasswordResetToken).Find(&user).RowsAffected
+
+	if countRow == 0 {
+		return nil, false
 	}
 
-	if !isExists {
-		return &user, "Account not exists"
-	}
+	fmt.Println("Username", user.Username)
 
-	if user.PasswordResetToken != input.PasswordResetToken {
-		return nil, "Token invalid"
-	}
-
-	return &user, "Forgot successfully"
+	return &user, true
 
 }
