@@ -11,6 +11,6 @@ func NewService(repository IOTPRepository) *service {
 		repository: repository,
 	}
 }
-func (s *service) GenerateNewOTP(token string) *models.OTPToken {
-	return s.repository.GenerateNewOTP(token)
+func (s *service) GenerateNewOTP(token string, user uint) *models.OTPToken {
+	return s.repository.GenerateNewOTP(token, user)
 }

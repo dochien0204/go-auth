@@ -29,7 +29,7 @@ func (s *service) ForgotService(input *InputForgot) (string, bool) {
 
 	otpCode, err := utils.GenCaptchaCode()
 
-	s.GenerateNewOTP(otpCode)
+	s.IOtp.GenerateNewOTP(otpCode, user.ID)
 	if err != nil {
 		return "Send OTP failed", false
 	}

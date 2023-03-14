@@ -38,6 +38,10 @@ func InitAuthRoutes(route *gin.Engine) {
 	groupRoute.POST("/signin", loginHandler.LoginHandler)
 	groupRoute.POST("/forgot", forgotHandler.ForgotHandler)
 
+	groupRoute.PATCH("/:userId/update-user", getAllUsersHandler.UpdateUserByIdHandler)
+
 	groupRoute.GET("/find-all", getAllUsersHandler.GetAllUserHandler)
 	groupRoute.GET("/:username/find", getAllUsersHandler.GetUserByUserName)
+
+	groupRoute.DELETE("/:userId/delete-user", getAllUsersHandler.DeleteUserByIdHandler)
 }

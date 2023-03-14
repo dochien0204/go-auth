@@ -9,7 +9,7 @@ import (
 )
 
 type IOTPRepository interface {
-	GenerateNewOTP(token string) *models.OTPToken
+	GenerateNewOTP(token string, user uint) *models.OTPToken
 }
 
 type repository struct {
@@ -22,12 +22,12 @@ func NewRepository() *repository {
 	}
 }
 
-func (r *repository) GenerateNewOTP(token string) *models.OTPToken {
+func (r *repository) GenerateNewOTP(token string, user uint) *models.OTPToken {
 	var otpToken models.OTPToken
 
 	otpToken.ExpiredAt = time.Now().Add(time.Minute * 10)
 	otpToken.Token = token
-	otpToken.ID = 0
+	otpToken.UserId = user
 
 	r.database.Create(&otpToken)
 	return &otpToken
