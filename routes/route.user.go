@@ -17,4 +17,8 @@ func InitUseRoutes(route *gin.Engine) {
 
 	// userGroupRoute.GET("/list", userHandler.CreateNewUserHanlder)
 	userGroupRoute.POST("/create-user", userHandler.CreateNewUserHanlder)
+	userGroupRoute.GET("list", userHandler.GetAllUserHandler)
+	userGroupRoute.GET("/:userId/find", userHandler.GetUserByIdHandler)
+	userGroupRoute.PATCH("/:userId/update", userHandler.UpdateUserByIdHandler)
+	userGroupRoute.DELETE("/:userId/delete", userHandler.DeleteUserByIdHandler)
 }
