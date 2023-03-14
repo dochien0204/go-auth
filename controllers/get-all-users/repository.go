@@ -74,6 +74,9 @@ func (r *repository) DeleteUserById(userId uint) (*models.EntityUser, string) {
 		return nil, "User does not exists"
 	}
 
+	//Err
+	// r.database.Delete(&user, userId)
+
 	sqlStatement := `DELETE FROM entity_users where id = $1;`
 
 	r.database.Exec(sqlStatement, userId)
