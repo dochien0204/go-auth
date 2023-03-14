@@ -9,7 +9,7 @@ services:
     volumes:
       - api:/usr/src/app/
     depends_on:
-      - db-postgres          # Uncomment this when using postgres.
+      - db-postgres
     networks:
       - app
 
