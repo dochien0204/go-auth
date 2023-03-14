@@ -10,9 +10,8 @@ services:
       - api:/usr/src/app/
     depends_on:
       - fullstack-postgres          # Uncomment this when using postgres.
-      # - fullstack-mysql           # Uncomment this when using mysql.
     networks:
-      - fullstack
+      - app
 
 
   fullstack-postgres:
@@ -28,4 +27,4 @@ services:
     volumes:
       - database_postgres:/var/lib/postgresql/data
     networks:
-      - fullstack
+      - app
