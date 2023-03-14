@@ -9,14 +9,14 @@ services:
     volumes:
       - api:/usr/src/app/
     depends_on:
-      - fullstack-postgres          # Uncomment this when using postgres.
+      - db-postgres          # Uncomment this when using postgres.
     networks:
       - app
 
 
   fullstack-postgres:
     image: postgres:latest
-    container_name: full_db_postgres
+    container_name: db_postgres
     environment:
       - POSTGRES_USER=postgres 
       - POSTGRES_PASSWORD=posgtres
