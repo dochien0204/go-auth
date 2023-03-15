@@ -1,34 +1,41 @@
-version: '3.8'
-networks:
-  test_docker:
-    driver: bridge
+version: '3'
 services:
-  app: 
-    container_name: web_api
+  app:
+    image: app
+    container_name: docker_crud
     build: .
     ports: 
-      - "8080:8080"
-    volumes: 
-      - api:/var/snap/docker/common/var-lib-docker/volumes/api
-    depends_on:
-      - db
-    networks:
-      - test_docker
-  db: 
-    image: postgres
+      - '8081:8080' 
+    restart: on-failure
     volumes:
-      - db:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=users
-      - POSTGRES_HOST="localhost"
+      - api:/usr/src/app/
+    depends_on:
+      - db_postgres         
     networks:
-      - test_docker
+      - fullstack
+
+
+  db_postgres:
+    image: postgres:latest
+    container_name: docker_postgres
+    environment:
+      - POSTGRES_USER='postgres'
+      - POSTGRES_PASSWORD='postgres'
+      - POSTGRES_DB='users'
+      - DATABASE_HOST='localhost'
+    ports:
+      - '5400:5432'
+    volumes:
+      - database_postgres:/var/lib/postgresql/data
+    networks:
+      - fullstack
+
 volumes:
- api:
- db:
- 
+  api:
+  database_postgres:
+    driver: local          
+
+networks:
+  fullstack:
+    driver: bridge
 
