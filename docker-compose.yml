@@ -1,7 +1,21 @@
-version: '3'
+version: '3.8'
 services:
+  db_postgres:
+    image: postgres:latest
+    container_name: docker_postgres
+    environment:
+      - POSTGRES_USER='postgres'
+      - POSTGRES_PASSWORD='postgres'
+      - POSTGRES_DB='users'
+      - POSTGRES_HOST='localhost'
+    ports:
+      - '5400:5432'
+    volumes:
+      - database_postgres:/var/lib/postgresql/data
+    networks:
+      - fullstack
+
   app:
-    image: app
     container_name: docker_crud
     build: .
     ports: 
@@ -11,22 +25,6 @@ services:
       - api:/usr/src/app/
     depends_on:
       - db_postgres         
-    networks:
-      - fullstack
-
-
-  db_postgres:
-    image: postgres:latest
-    container_name: docker_postgres
-    environment:
-      - POSTGRES_USER='postgres'
-      - POSTGRES_PASSWORD='postgres'
-      - POSTGRES_DB='users'
-      - DATABASE_HOST='localhost'
-    ports:
-      - '5400:5432'
-    volumes:
-      - database_postgres:/var/lib/postgresql/data
     networks:
       - fullstack
 
