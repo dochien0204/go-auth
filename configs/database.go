@@ -13,11 +13,11 @@ var DB *gorm.DB
 func ConnectDB() {
 	var err error
 
-	host := "localhost"
+	host := "db_postgres"
 	username := "postgres"
 	password := "postgres"
 	databaseName := "users"
-	port := "5400"
+	port := "5432"
 
 	dns := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Africa/Lagos", host, username, password, databaseName, port)
 

@@ -1,6 +1,9 @@
 package controllers
 
-import "crud-api/models"
+import (
+	"crud-api/models"
+	"fmt"
+)
 
 type service struct {
 	repository Repository
@@ -27,6 +30,8 @@ func (s *service) CreateNewUser(input *UserCreateInput) (*models.Users, string) 
 func (s *service) GetAllUser() ([]models.Users, string) {
 
 	resultGetAll, errGetAll := s.repository.GetAllUser()
+
+	fmt.Println("Hello")
 
 	return resultGetAll, errGetAll
 }
