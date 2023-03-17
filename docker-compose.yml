@@ -10,6 +10,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=users
+      - POSTGRES_HOST=localhost
     ports:
       - '5400:5432'
     volumes:
@@ -18,7 +19,6 @@ services:
       - connect
   app:
     container_name: docker_crud
-    image: 
     build: .
     ports: 
       - 8080:8080
