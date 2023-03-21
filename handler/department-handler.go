@@ -132,3 +132,48 @@ func (h *handlerDepartment) GetAllEmployeeInDepartment(ctx *gin.Context) {
 
 	utils.APIResponse(ctx, "Get All Employees in Department Successfully", http.StatusOK, http.MethodGet, result)
 }
+
+func (h *handlerDepartment) DeleteEmployeeInDepartment(ctx *gin.Context) {
+	employeeIdParam := ctx.Param("employeeId")
+	departmentIdParam := ctx.Param("departmentId")
+
+	employeeIdConv, errE := strconv.Atoi(employeeIdParam)
+	departmentIdConv, errD := strconv.Atoi(departmentIdParam)
+
+	if errE != nil || errD != nil {
+		utils.ValidatorErrorResponse(ctx, "Delete Employee Failed", http.StatusBadRequest, http.MethodDelete, "Path invalid")
+		return
+	}
+
+	result, errorD := h.service.DeleteEmployeeInDepartment(employeeIdConv, departmentIdConv)
+
+	if errorD != "Successfully" {
+		utils.ValidatorErrorResponse(ctx, "Delete Employee Failed", http.StatusBadRequest, http.MethodDelete, errorD)
+		return
+	}
+
+	utils.APIResponse(ctx, "Delete Successfully", http.StatusOK, http.MethodDelete, result)
+}
+
+func (h *handlerDepartment) AddEmployeeIntoDepartment(ctx *gin.Context) {
+	employeeIdParam := ctx.Param("employeeId")
+	departmentIdParam := ctx.Param("departmentId")
+
+	employeeIdConv, errE := strconv.Atoi(employeeIdParam)
+	departmentIdConv, errD := strconv.Atoi(departmentIdParam)
+
+	if errE != nil || errD != nil {
+		utils.ValidatorErrorResponse(ctx, "Delete Employee Failed", http.StatusBadRequest, http.MethodDelete, "Path invalid")
+		return
+	}
+
+	result, errGet := h.service.AddEmployeeIntoDepartment(employeeIdConv, departmentIdConv)
+
+	if errGet != "Successfully" {
+		utils.ValidatorErrorResponse(ctx, "POST Failed", http.StatusBadRequest, http.MethodPost, errGet)
+		return
+	}
+
+	utils.APIResponse(ctx, "ADD Successfully", http.StatusOK, http.MethodPost, result)
+
+}

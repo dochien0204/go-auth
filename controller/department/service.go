@@ -56,3 +56,16 @@ func (s *service) GetAllEmployeeInDepartment(department int) ([]*model.Employee,
 
 	return result, err
 }
+
+func (s *service) DeleteEmployeeInDepartment(employeeId int, departmentId int) (*model.EmployeeDepartment, string) {
+	result, err := s.repository.DeleteEmployeeInDepartment(employeeId, departmentId)
+
+	return result, err
+}
+
+func (s *service) AddEmployeeIntoDepartment(employeeId int, departmentId int) (*model.EmployeeDepartment, string) {
+
+	result, err := s.repository.AddEmployeeIntoDepartment(employeeId, departmentId)
+
+	return result, err
+}

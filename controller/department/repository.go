@@ -6,6 +6,7 @@ import (
 	"crud_api_company/utils"
 
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 type repository struct {
@@ -19,6 +20,8 @@ type IRepository interface {
 	UpdateDepartmentById(departmentId int, input *model.Department) (*model.Department, string)
 	DeleteDepartmentById(departmentId int) (*model.Department, string)
 	GetAllEmployeeInDepartment(department int) ([]*model.Employee, string)
+	DeleteEmployeeInDepartment(employeeId int, departmentId int) (*model.EmployeeDepartment, string)
+	AddEmployeeIntoDepartment(employeeId int, departmentId int) (*model.EmployeeDepartment, string)
 }
 
 func NewDepartmentRepository() *repository {
@@ -126,4 +129,36 @@ func (r *repository) GetAllEmployeeInDepartment(department int) ([]*model.Employ
 	}
 
 	return departments.Employees, "Successfully"
+}
+
+func (r *repository) DeleteEmployeeInDepartment(employeeId int, departmentId int) (*model.EmployeeDepartment, string) {
+
+	var employeeDepartment model.EmployeeDepartment
+	result := r.Database.Table("employee_department").Clauses(clause.Returning{}).Where("employee_id = ? AND department_id = ? ", employeeId, departmentId).Delete(&employeeDepartment)
+	if result.Error != nil {
+		return nil, "Something went wrong"
+	}
+
+	return &employeeDepartment, "Successfully"
+}
+
+func (r *repository) AddEmployeeIntoDepartment(employeeId int, departmentId int) (*model.EmployeeDepartment, string) {
+
+	var employeeDepartment model.EmployeeDepartment
+	rowCount := r.Database.Table("employee_department").Where("employee_id = ? and department_id = ?", employeeId, departmentId).Find(&employeeDepartment)
+
+	if rowCount.RowsAffected != 0 {
+		return nil, "Is Exists"
+	}
+
+	employeeDepartment.DepartmentId = departmentId
+	employeeDepartment.EmployeeId = employeeId
+
+	result := r.Database.Table("employee_department").Create(&employeeDepartment)
+
+	if result.Error != nil {
+		return nil, "Something went wrong"
+	}
+
+	return &employeeDepartment, "Successfully"
 }

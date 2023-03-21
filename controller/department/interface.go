@@ -9,4 +9,6 @@ type IDepartment interface {
 	UpdateDepartmentById(departmentId int, input *DepartmentUpdateInput) (*model.Department, string)
 	DeleteDepartmentById(departmentId int) (*model.Department, string)
 	GetAllEmployeeInDepartment(department int) ([]*model.Employee, string)
+	DeleteEmployeeInDepartment(employeeId int, departmentId int) (*model.EmployeeDepartment, string)
+	AddEmployeeIntoDepartment(employeeId int, departmentId int) (*model.EmployeeDepartment, string)
 }

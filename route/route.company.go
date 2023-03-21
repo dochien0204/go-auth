@@ -28,4 +28,6 @@ func InItCompanyRoute(route *gin.Engine) {
 	companyGroup.PATCH("/department/:departmentId/update", departmentHandler.UpdateDepartmentById)
 	companyGroup.DELETE("/department/:departmentId/delete", departmentHandler.DeleteDepartmentById)
 	companyGroup.GET("/department/:departmentId/get-employees", departmentHandler.GetAllEmployeeInDepartment)
+	companyGroup.DELETE("/department/delete-employee-department/:employeeId/:departmentId", departmentHandler.DeleteEmployeeInDepartment)
+	companyGroup.POST("/department/add-employee-into-department/:employeeId/:departmentId", departmentHandler.AddEmployeeIntoDepartment)
 }
