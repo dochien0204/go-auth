@@ -20,5 +20,12 @@ func InItCompanyRoute(route *gin.Engine) {
 	departmentHandler := handler.NewDepartmentHandler(departmentService)
 
 	companyGroup.GET("/company/list", companyHandler.GetAllCompanyHanlder)
-	companyGroup.GET("/department/list", departmentHandler.GetAllDepartMentHandler)
+
+	//department
+	companyGroup.GET("/department/list", departmentHandler.GetAllDepartmentHandler)
+	companyGroup.POST("/department/create", departmentHandler.CreateNewDepartmetForCompany)
+	companyGroup.GET("/department/:departmentId", departmentHandler.GetDepartmentById)
+	companyGroup.PATCH("/department/:departmentId/update", departmentHandler.UpdateDepartmentById)
+	companyGroup.DELETE("/department/:departmentId/delete", departmentHandler.DeleteDepartmentById)
+	companyGroup.GET("/department/:departmentId/get-employees", departmentHandler.GetAllEmployeeInDepartment)
 }
