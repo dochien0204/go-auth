@@ -37,5 +37,8 @@ func InItCompanyRoute(route *gin.Engine) {
 	companyGroup.POST("/department/add-employee-into-department/:employeeId/:departmentId", departmentHandler.AddEmployeeIntoDepartment)
 
 	//employee
-	companyGroup.GET("employee/list", employeeHandler.GetAllEmployee)
+	companyGroup.GET("/employee/list", employeeHandler.GetAllEmployee)
+	companyGroup.POST("/employee/add-employee-into-company/:companyId", employeeHandler.AddEmployeeIntoCompany)
+	companyGroup.DELETE("/employee/:employeeId/delete", employeeHandler.DeleteEmployee)
+	companyGroup.GET("/employee/:companyId/get", employeeHandler.GetAllEmployeeFromCompany)
 }
