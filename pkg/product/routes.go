@@ -12,7 +12,7 @@ func RegisterRoutes(r *gin.Engine, c *config.Config) *ServiceClient {
 	svc := &ServiceClient{
 		Client: InitServiceClient(c),
 	}
-	r.Group("/product")
+	r.Group("product")
 	r.POST("/", svc.CreateProduct)
 
 	return svc

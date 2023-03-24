@@ -3,6 +3,7 @@ package routes
 import (
 	"Microservices/pkg/auth/pb"
 	"context"
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -13,7 +14,7 @@ type RegisterRequestBody struct {
 	Password string `json:"password"`
 }
 
-func Register(ctx *gin.Context, c pb.AuthServicesClient) {
+func Register(ctx *gin.Context, c pb.AuthServiceClient) {
 	body := RegisterRequestBody{}
 
 	if err := ctx.BindJSON(&body); err != nil {
@@ -28,6 +29,7 @@ func Register(ctx *gin.Context, c pb.AuthServicesClient) {
 
 	if err != nil {
 		ctx.AbortWithError(http.StatusBadGateway, err)
+		fmt.Println("Loi o day")
 		return
 	}
 
