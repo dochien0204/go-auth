@@ -1,0 +1,28 @@
+{
+    "services": [
+        {
+            "id":"company_api",
+            "name":"company_api",
+            "port":8080,
+            "tagged_addresses": [
+                {
+                    "lan": [
+                        {
+                            "address":"10.1.44.200",
+                            "port": 8000
+                        }
+                    ],
+                    "wan": [
+                        {
+                            "address":"10.1.44.200",
+                            "port": 8001
+                        }
+                    ]
+                }
+            ],
+            "tags": [
+                "primary"
+            ]
+        }
+    ]
+}

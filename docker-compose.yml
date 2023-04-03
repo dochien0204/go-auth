@@ -1,0 +1,35 @@
+version: '3.8'
+networks:
+  kong-net:
+    external: true
+services:
+  db_postgres:
+    image: postgres:latest
+    container_name: docker_postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=companies
+    ports:
+      - '5401:5432'
+    volumes:
+      - database_postgres:/var/lib/postgresql/data
+    networks:
+      - kong-net
+  app:
+    container_name: docker_crud_company
+    build: .
+    ports: 
+      - 8080:8080
+    restart: on-failure
+    volumes:
+      - api:/usr/src/app/
+    depends_on:
+      - db_postgres
+    networks:
+      - kong-net
+volumes:
+  api:
+  database_postgres:
+    driver: local          
+
