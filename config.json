@@ -1,0 +1,38 @@
+{
+    "services": [
+        {
+            "id":"user_api",
+            "name":"user_api",
+            "port":8081,
+            "tagged_addresses": [
+                {
+                    "lan": [
+                        {
+                            "address":"10.1.44.200",
+                            "port": 8000
+                        }
+                    ],
+                    "wan": [
+                        {
+                            "address":"10.1.44.200",
+                            "port": 8001
+                        }
+                    ]
+                }
+            ],
+            "tags": [
+                "primary"
+            ],
+            "check": {
+                "id": "api",
+                "name": "HTTP API on port 8081",
+                "http": "http://10.1.44.200:8081/api/v1/users/list",
+                "tls_server_name": "",
+                "tls_skip_verify": false,
+                "method": "GET",
+                "interval": "10s",
+                "timeout": "1s"
+              }
+        }
+    ]
+}

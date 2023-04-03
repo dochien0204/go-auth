@@ -1,7 +1,7 @@
 version: '3.8'
 networks:
-  connect: 
-    driver: bridge
+  kong-net:
+    external: true
 services:
   db_postgres:
     image: postgres:latest
@@ -11,23 +11,23 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=users
     ports:
-      - '5400:5432'
+      - '5401:5432'
     volumes:
       - database_postgres:/var/lib/postgresql/data
     networks:
-      - connect
+      - kong-net
   app:
     container_name: docker_crud
     build: .
     ports: 
-      - 8080:8080
+      - 8081:8081
     restart: on-failure
     volumes:
       - api:/usr/src/app/
     depends_on:
       - db_postgres
     networks:
-      - connect
+      - kong-net
 volumes:
   api:
   database_postgres:
